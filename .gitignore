@@ -1,4 +1,5 @@
 *.backup
 *.diff
 *.orig
+*.patch
 *.swp
