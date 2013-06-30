@@ -34,11 +34,12 @@ class Pure_CSS {
     }
 
     static function enqueue_scripts() {
-        $enqueue = "http://yui.yahooapis.com/combo?pure/0.2.0/base-min.css";
         $pure_css_version = apply_filters( "pure_css_version", Pure_CSS::$pure_css_version );
-        $pure_css_minified = apply_filters( "pure_css_minified", Pure_CSS::$pure_css_minified );
 
-        $pure_css_minified = $pure_css_minified ? "min" : "";
+        $pure_css_minified = apply_filters( "pure_css_minified", Pure_CSS::$pure_css_minified );
+        $pure_css_minified = $pure_css_minified ? "-min" : "";
+
+        $enqueue = "http://yui.yahooapis.com/combo?pure/$pure_css_version/base$pure_css_minified.css";
 
         $supports = get_theme_support( "pure-css" );
 
@@ -46,7 +47,7 @@ class Pure_CSS {
             foreach ( $supports[ 0 ] as $s ) {
                 if ( ! in_array( $s, Pure_CSS::$supports ) ) continue;
 
-                $enqueue .= "&pure/$pure_css_version/$s-$pure_css_minified.css";
+                $enqueue .= "&pure/$pure_css_version/$s$pure_css_minified.css";
             }
         }
 
