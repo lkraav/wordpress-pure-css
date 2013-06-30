@@ -40,10 +40,14 @@ class Pure_CSS {
 
         $pure_css_minified = $pure_css_minified ? "min" : "";
 
-        foreach ( Pure_CSS::$supports as $s ) {
-            if ( ! current_theme_supports( "pure-css-" . $s ) ) continue;
+        $supports = get_theme_support( "pure-css" );
 
-            $enqueue .= "&pure/$pure_css_version/$s-$pure_css_minified.css";
+        if ( is_array( $supports ) && isset( $supports[ 0 ] ) ) {
+            foreach ( $supports[ 0 ] as $s ) {
+                if ( ! in_array( $s, Pure_CSS::$supports ) ) continue;
+
+                $enqueue .= "&pure/$pure_css_version/$s-$pure_css_minified.css";
+            }
         }
 
         wp_enqueue_style( "pure", $enqueue, false, null );
