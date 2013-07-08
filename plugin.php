@@ -31,6 +31,7 @@ class Pure_CSS {
 
     static function on_load() {
         add_action( 'wp_enqueue_scripts', array( __CLASS__, "enqueue_scripts" ) );
+        add_action( 'plugins_loaded', array( __CLASS__, "filter_grid_columns" ) );
     }
 
     static function enqueue_scripts() {
@@ -52,6 +53,23 @@ class Pure_CSS {
         }
 
         wp_enqueue_style( "pure", $enqueue, false, null );
+    }
+
+    static function filter_grid_columns() {
+        if ( class_exists( "Grid_Columns" ) ) {
+            add_action( "gc_column_class", array( __CLASS__, "gc_column_class" ), 10, 2 );
+            add_action( "gc_row_class", array( __CLASS__, "gc_row_class" ) );
+        }
+    }
+
+    static function gc_column_class( $classes, $attr ) {
+        extract( $attr );
+
+        return array( "pure-u-$span-$grid" );
+    }
+
+    static function gc_row_class() {
+        return array( "pure-g-r" );
     }
 }
 ?>
