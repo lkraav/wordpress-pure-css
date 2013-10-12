@@ -67,9 +67,16 @@ class Pure_CSS {
 
         if ( $push ) $span += $push;
 
+        # must simplify fractions
         if ( $grid % $span === 0 ) {
             $grid = $grid / $span;
             $span = 1;
+        }
+        else {
+            $gcd = self::gcd( $grid, $span );
+
+            $grid = $grid / $gcd;
+            $span = $span / $gcd;
         }
 
         if ( sizeof( $class ) ) $class[] = "pure-u-$span-$grid";
@@ -79,6 +86,25 @@ class Pure_CSS {
 
     static function gc_row_class() {
         return array( "pure-g-r" );
+    }
+
+    # http://stackoverflow.com/questions/12412782/simplify-a-fraction
+    private function gcd( $a, $b ) {
+        $a = abs( $a );
+        $b = abs( $b );
+
+        if ( $a < $b ) list( $b, $a ) = array( $a, $b );
+        if ( $b == 0 ) return $a;
+
+        $r = $a % $b;
+
+        while ( $r > 0 ) {
+            $a = $b;
+            $b = $r;
+            $r = $a % $b;
+        }
+
+        return $b;
     }
 }
 ?>
