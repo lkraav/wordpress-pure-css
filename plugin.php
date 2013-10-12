@@ -72,7 +72,9 @@ class Pure_CSS {
             $span = 1;
         }
 
-        return array( "pure-u-$span-$grid" );
+        if ( sizeof( $class ) ) $class[] = "pure-u-$span-$grid";
+
+        return $class;
     }
 
     static function gc_row_class() {
