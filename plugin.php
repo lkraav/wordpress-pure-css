@@ -65,6 +65,8 @@ class Pure_CSS {
     static function gc_column_class( $classes, $attr ) {
         extract( $attr );
 
+        if ( $push ) $span += $push;
+
         if ( $grid % $span === 0 ) {
             $grid = $grid / $span;
             $span = 1;
