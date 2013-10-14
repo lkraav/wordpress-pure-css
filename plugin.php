@@ -11,9 +11,9 @@ Author URI: http://leho.kraav.com/wordpress/wordpress-pure-css/
 Pure_CSS::on_load();
 
 class Pure_CSS {
-    static $version = '1.3.1'; # TODO get_plugin_data()
+    static $version = "1.3.1"; # TODO get_plugin_data()
 
-    static $pure_css_version = '0.3.0'; #
+    static $pure_css_version = "0.3.0"; #
     static $pure_css_minified = true; #
 
     # http://purecss.io/customize/
@@ -30,8 +30,8 @@ class Pure_CSS {
     );
 
     static function on_load() {
-        add_action( 'wp_enqueue_scripts', array( __CLASS__, "enqueue_scripts" ) );
-        add_action( 'plugins_loaded', array( __CLASS__, "filter_grid_columns" ) );
+        add_action( "wp_enqueue_scripts", array( __CLASS__, "enqueue_scripts" ) );
+        add_action( "plugins_loaded", array( __CLASS__, "filter_grid_columns" ) );
     }
 
     static function enqueue_scripts() {
