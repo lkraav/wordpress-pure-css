@@ -53,6 +53,7 @@ class Pure_CSS {
         }
 
         wp_enqueue_style( "pure", $enqueue, false, null );
+        wp_dequeue_style( "grid-columns" );
     }
 
     static function filter_grid_columns() {
@@ -80,9 +81,9 @@ class Pure_CSS {
             $span = $span / $gcd;
         }
 
-        if ( sizeof( $class ) ) $class[] = "pure-u-$span-$grid";
+        $class[] = "pure-u-$span-$grid"; # converts string to array
 
-        return $class;
+        return array_merge( $class, $classes );
     }
 
     static function gc_row_class() {
