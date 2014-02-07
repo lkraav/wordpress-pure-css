@@ -35,9 +35,9 @@ class Pure_CSS {
     }
 
     static function enqueue_scripts() {
-        $pure_css_version = apply_filters( "pure_css_version", Pure_CSS::$pure_css_version );
+        $pure_css_version = apply_filters( "pure_css_version", self::$pure_css_version );
 
-        $pure_css_minified = apply_filters( "pure_css_minified", Pure_CSS::$pure_css_minified );
+        $pure_css_minified = apply_filters( "pure_css_minified", self::$pure_css_minified );
         $pure_css_minified = $pure_css_minified ? "-min" : "";
 
         $enqueue = "http://yui.yahooapis.com/combo?pure/$pure_css_version/base$pure_css_minified.css";
@@ -46,7 +46,7 @@ class Pure_CSS {
 
         if ( is_array( $supports ) && isset( $supports[ 0 ] ) ) {
             foreach ( $supports[ 0 ] as $s ) {
-                if ( ! in_array( $s, Pure_CSS::$supports ) ) continue;
+                if ( ! in_array( $s, self::$supports ) ) continue;
 
                 $enqueue .= "&pure/$pure_css_version/$s$pure_css_minified.css";
             }
