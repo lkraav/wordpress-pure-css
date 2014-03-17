@@ -59,6 +59,7 @@ class Pure_CSS {
         if ( class_exists( "Grid_Columns" ) ) {
             add_action( "gc_column_class", array( __CLASS__, "gc_column_class" ), 10, 2 );
             add_action( "gc_row_class", array( __CLASS__, "gc_row_class" ) );
+            add_filter( "gc_allowed_grids", array( __CLASS__, "gc_allowed_grids" ) );
         }
     }
 
@@ -86,6 +87,12 @@ class Pure_CSS {
 
     static function gc_row_class() {
         return array( "pure-g-r" );
+    }
+
+    static function gc_allowed_grids( $grids ) {
+        $grids[] = 24;
+
+        return $grids;
     }
 
     # http://stackoverflow.com/questions/12412782/simplify-a-fraction
