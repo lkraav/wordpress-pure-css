@@ -77,7 +77,7 @@ class Pure_CSS {
     }
 
     static function gc_row_class() {
-        return array( "pure-g-r" );
+        return array( "pure-g" );
     }
 
     static function gc_allowed_grids( $grids ) {
