@@ -30,6 +30,7 @@ class Pure_CSS {
     );
 
     static function on_load() {
+        add_action( "after_setup_theme", array( __CLASS__, "filter_hybrid_base_dynamic" ) );
         add_action( "wp_enqueue_scripts", array( __CLASS__, "enqueue_scripts" ) );
         add_action( "plugins_loaded", array( __CLASS__, "filter_grid_columns" ) );
     }
@@ -63,6 +64,18 @@ class Pure_CSS {
             add_action( "gc_row_class", array( __CLASS__, "gc_row_class" ) );
             add_filter( "gc_allowed_grids", array( __CLASS__, "gc_allowed_grids" ) );
         }
+    }
+
+    static function filter_hybrid_base_dynamic() {
+        if ( ! function_exists( "hybrid_get_prefix" ) ) return;
+        $prefix = hybrid_get_prefix();
+
+        # main div is always a grid
+        add_filter( "{$prefix}_main_class", function( $class ) { return $class .= " pure-g"; } );
+
+        # collapse by default, media query overrides set in theme
+        add_filter( "{$prefix}_content_class", function( $class ) { return $class .= " pure-u-1"; } );
+        add_filter( "{$prefix}_sidebar_class", function( $class ) { return $class .= " pure-u-1"; } );
     }
 
     static function gc_column_class( $classes, $attr ) {
