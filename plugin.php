@@ -66,25 +66,7 @@ class Pure_CSS {
     }
 
     static function gc_column_class( $classes, $attr ) {
-        extract( $attr );
-
-        if ( $push ) $span += $push;
-
-        # must simplify fractions
-        if ( $grid % $span === 0 ) {
-            $grid = $grid / $span;
-            $span = 1;
-        }
-        else {
-            $gcd = self::gcd( $grid, $span );
-
-            $grid = $grid / $gcd;
-            $span = $span / $gcd;
-        }
-
-        $class[] = "pure-u-$span-$grid"; # converts string to array
-
-        return array_merge( $class, $classes );
+        return array_merge( $classes, array( "pure-u-1" ) );
     }
 
     static function gc_column_defaults( $defaults ) {
