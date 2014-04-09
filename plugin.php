@@ -1,8 +1,8 @@
 <?php
 /*
-Plugin Name: Pure CSS Theme Features
+Plugin Name: Pure CSS Theme Features (1.4-branch)
 Plugin URI: http://www.wordpress.org/plugins/wordpress-pure-css/
-Description: Load Pure CSS modules http://purecss.io/customize/ via add_theme_support()
+Description: Load Pure CSS modules http://purecss.io/customize/ via add_theme_support(). 1.4-branch needs to be maintained indefinitely, because Pure 0.5.0+ grid system is completely different. Upgrading the plugin to 1.5.0+ is NOT backwards compatible.
 Author: Leho Kraav
 Version: 1.4.3
 Author URI: http://leho.kraav.com/wordpress/wordpress-pure-css/
