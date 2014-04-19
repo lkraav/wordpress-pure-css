@@ -94,6 +94,7 @@ class Pure_CSS {
     }
 
     static function gc_allowed_grids( $grids ) {
+        $grids[] = 1;
         $grids[] = 24;
 
         return $grids;
