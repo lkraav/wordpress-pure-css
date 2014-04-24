@@ -51,6 +51,10 @@ class Pure_CSS {
 
                 $enqueue .= "&pure/$pure_css_version/$s$pure_css_minified.css";
             }
+
+            if ( in_array( "grids", $supports[ 0 ] ) ) {
+                $enqueue .= "&pure/$pure_css_version/grids-responsive$pure_css_minified.css";
+            }
         }
 
         wp_enqueue_style( "pure", $enqueue, false, null );
