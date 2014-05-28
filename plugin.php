@@ -13,7 +13,7 @@ Pure_CSS::on_load();
 class Pure_CSS {
     static $version = "1.5.0"; # TODO get_plugin_data()
 
-    static $pure_css_version = "0.5.0-rc-1"; #
+    static $pure_css_version = "0.5.0"; #
     static $pure_css_minified = true; #
 
     # http://purecss.io/customize/
