@@ -41,7 +41,7 @@ class Pure_CSS {
         $pure_css_minified = apply_filters( "pure_css_minified", self::$pure_css_minified );
         $pure_css_minified = $pure_css_minified ? "-min" : "";
 
-        $enqueue = "http://yui.yahooapis.com/combo?pure/$pure_css_version/base$pure_css_minified.css";
+        $enqueue = "https://yui-s.yahooapis.com/combo?pure/$pure_css_version/base$pure_css_minified.css";
 
         $supports = get_theme_support( "pure-css" );
 
