@@ -83,6 +83,33 @@ class Pure_CSS {
     }
 
     static function gc_column_class( $classes, $attr ) {
+        /*
+         * None of this matters with pure-0.5.0 and should be removed?
+         * Plugin should always return lowest mobile view class "pure-u-1"
+         * All higher media queries handled in content class parameter
+         * Column shortcode grid/span attrs only determine pure-g groupings
+        if ( $push ) $span += $push;
+
+        # must simplify fractions
+        if ( $grid % $span === 0 ) {
+            $grid = $grid / $span;
+            $span = 1;
+        }
+        else {
+            $gcd = self::gcd( $grid, $span );
+
+            $grid = $grid / $gcd;
+            $span = $span / $gcd;
+        }
+
+        if ( sizeof( $class ) ) {
+            $class[] = ( 1 === $span && 1 === $grid ?
+                "pure-u-1" :
+                "pure-u-$span-$grid"
+            );
+        }
+        */
+
         # content should be able to override minimum mobile grid
         # https://github.com/yahoo/pure/issues/437
         $default_unit = array( "pure-u-1" );
@@ -110,25 +137,6 @@ class Pure_CSS {
         $grids[] = 24;
 
         return $grids;
-    }
-
-    # http://stackoverflow.com/questions/12412782/simplify-a-fraction
-    private function gcd( $a, $b ) {
-        $a = abs( $a );
-        $b = abs( $b );
-
-        if ( $a < $b ) list( $b, $a ) = array( $a, $b );
-        if ( $b == 0 ) return $a;
-
-        $r = $a % $b;
-
-        while ( $r > 0 ) {
-            $a = $b;
-            $b = $r;
-            $r = $a % $b;
-        }
-
-        return $b;
     }
 }
 ?>
