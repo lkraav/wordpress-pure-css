@@ -83,7 +83,15 @@ class Pure_CSS {
     }
 
     static function gc_column_class( $classes, $attr ) {
-        return array_merge( $classes, array( "pure-u-1" ) );
+        # content should be able to override minimum mobile grid
+        # https://github.com/yahoo/pure/issues/437
+        $default_unit = array( "pure-u-1" );
+
+        if ( sizeof( preg_grep( "/pure-u-\d/", $classes ) ) ) {
+            $default_unit = array();
+        }
+
+        return array_merge( $classes, $default_unit );
     }
 
     static function gc_column_defaults( $defaults ) {
