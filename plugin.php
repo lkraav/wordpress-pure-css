@@ -31,6 +31,7 @@ class Pure_CSS {
 
     static function on_load() {
         add_action( "after_setup_theme", array( __CLASS__, "filter_hybrid_base_dynamic" ) );
+        add_action( "after_setup_theme", array( __CLASS__, "filter_hybrid_base_dynamic_020" ) );
         add_action( "wp_enqueue_scripts", array( __CLASS__, "enqueue_scripts" ) );
         add_action( "plugins_loaded", array( __CLASS__, "filter_grid_columns" ) );
     }
@@ -73,6 +74,10 @@ class Pure_CSS {
     }
 
     static function filter_hybrid_base_dynamic() {
+        return;
+    }
+
+    static function filter_hybrid_base_dynamic_020() {
         if ( ! function_exists( "hybrid_get_prefix" ) ) {
             return;
         }
