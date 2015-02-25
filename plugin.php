@@ -45,14 +45,16 @@ class Pure_CSS {
 
         $supports = get_theme_support( "pure-css" );
 
-        if ( is_array( $supports ) && isset( $supports[ 0 ] ) ) {
-            foreach ( $supports[ 0 ] as $s ) {
-                if ( ! in_array( $s, self::$supports ) ) continue;
+        if ( is_array( $supports ) && isset( $supports[0] ) ) {
+            foreach ( $supports[0] as $s ) {
+                if ( ! in_array( $s, self::$supports ) ) {
+                    continue;
+                }
 
                 $enqueue .= "&pure/$pure_css_version/$s$pure_css_minified.css";
             }
 
-            if ( in_array( "grids", $supports[ 0 ] ) ) {
+            if ( in_array( "grids", $supports[0] ) ) {
                 $enqueue .= "&pure/$pure_css_version/grids-responsive$pure_css_minified.css";
             }
         }
@@ -71,7 +73,10 @@ class Pure_CSS {
     }
 
     static function filter_hybrid_base_dynamic() {
-        if ( ! function_exists( "hybrid_get_prefix" ) ) return;
+        if ( ! function_exists( "hybrid_get_prefix" ) ) {
+            return;
+        }
+
         $prefix = hybrid_get_prefix();
 
         # main div is always a grid
@@ -122,8 +127,8 @@ class Pure_CSS {
     }
 
     static function gc_column_defaults( $defaults ) {
-        $defaults[ "grid" ] = 1;
-        $defaults[ "class" ] = "pure-u-1";
+        $defaults["grid"] = 1;
+        $defaults["class"] = "pure-u-1";
 
         return $defaults;
     }
