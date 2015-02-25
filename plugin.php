@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: Pure CSS Theme Features
-Plugin URI: http://www.wordpress.org/plugins/wordpress-pure-css/
+Plugin URI: http://conversionready.com/plugins/wordpress-pure-css/
 Description: Load Pure CSS modules http://purecss.io/customize/ via add_theme_support()
 Author: Leho Kraav
 Version: 1.6.0
-Author URI: http://leho.kraav.com/wordpress/wordpress-pure-css/
+Author URI: http://github.com/lkraav/wordpress-pure-css/
 */
 
 Pure_CSS::on_load();
