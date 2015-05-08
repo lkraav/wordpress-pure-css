@@ -42,7 +42,8 @@ class Pure_CSS {
         $pure_css_minified = apply_filters( "pure_css_minified", self::$pure_css_minified );
         $pure_css_minified = $pure_css_minified ? "-min" : "";
 
-        $enqueue = "https://yui-s.yahooapis.com/combo?pure/$pure_css_version/base$pure_css_minified.css";
+        $cdn = "https://yui-s.yahooapis.com";
+        $enqueue = "$cdn/combo?pure/$pure_css_version/base$pure_css_minified.css";
 
         $supports = get_theme_support( "pure-css" );
 
@@ -61,6 +62,10 @@ class Pure_CSS {
         }
 
         wp_enqueue_style( "pure", $enqueue, false, null );
+
+        wp_enqueue_style( "pure-grids-responsive-old-ie", "$cdn/pure/$pure_css_version/grids-responsive-old-ie$pure_css_minified.css", false, null );
+        wp_style_add_data( "pure-grids-responsive-old-ie", "conditional", "lte IE 8" );
+
         wp_dequeue_style( "grid-columns" );
     }
 
