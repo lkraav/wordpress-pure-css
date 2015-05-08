@@ -4,14 +4,14 @@ Plugin Name: Pure CSS Theme Features
 Plugin URI: http://conversionready.com/plugins/wordpress-pure-css/
 Description: Load Pure CSS modules http://purecss.io/customize/ via add_theme_support()
 Author: Leho Kraav
-Version: 1.6.0
+Version: 1.6.1
 Author URI: http://github.com/lkraav/wordpress-pure-css/
 */
 
 Pure_CSS::on_load();
 
 class Pure_CSS {
-    static $version = "1.5.1"; # TODO get_plugin_data()
+    static $version = "1.6.1"; # TODO get_plugin_data()
 
     static $pure_css_version = "0.6.0"; #
     static $pure_css_minified = true; #
