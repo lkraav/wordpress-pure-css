@@ -70,6 +70,34 @@ class Pure_CSS {
         wp_dequeue_style( "grid-columns" );
     }
 
+    static function gform_field_content( $content, $field, $value, $lead_id, $form_id ) {
+        return $content; # wip, implement a specific opt-in?
+
+        if ( "email" === $field->type ) {
+            $dom = new DOMDocument();
+            $dom->loadHTML( '<?xml encoding="UTF-8">' . $content );
+
+            $label = $dom->getElementsByTagName( "label" )->item( 0 );
+            $input = $dom->getElementsByTagName( "input" )->item( 0 );
+
+            $content = html_entity_decode( $dom->saveHtml( $label ) . $dom->saveHtml( $input ) );
+        }
+
+        return $content;
+    }
+
+    static function gform_field_input( $input, $field, $value, $lead_id, $form_id ) {
+        if ( "honeypot" !== $field->type ) {
+            true;
+        }
+
+        return $input;
+    }
+
+    static function gform_form_tag( $form_tag, $form ) {
+        return str_replace( "class='", "class='pure-form ", $form_tag );
+    }
+
     static function gform_next_button( $button, $form ) {
         return str_replace( "class='", "class='pure-button ", $button );
     }
@@ -101,6 +129,12 @@ class Pure_CSS {
             add_filter( "gform_next_button", array( __CLASS__, "gform_next_button" ), 10, 2 );
             add_filter( "gform_previous_button", array( __CLASS__, "gform_previous_button" ), 10, 2 );
             add_filter( "gform_submit_button", array( __CLASS__, "gform_submit_button" ), 10, 2 );
+        }
+
+        if ( in_array( "forms", $supports[0] ) ) {
+            add_filter( "gform_field_content", array( __CLASS__, "gform_field_content" ), 10, 5 );
+            add_filter( "gform_field_input", array( __CLASS__, "gform_field_input" ), 10, 5 );
+            add_filter( "gform_form_tag", array( __CLASS__, "gform_form_tag" ), 10, 2 );
         }
     }
 
