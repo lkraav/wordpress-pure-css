@@ -30,6 +30,7 @@ class Pure_CSS {
     );
 
     static function on_load() {
+        add_action( "after_setup_theme", array( __CLASS__, "filter_get_the_image" ), 15 );
         add_action( "after_setup_theme", array( __CLASS__, "filter_gravityforms" ), 15 );
         add_action( "after_setup_theme", array( __CLASS__, "filter_grid_columns" ), 15 );
         add_action( "after_setup_theme", array( __CLASS__, "filter_hybrid_base_dynamic" ) );
@@ -70,6 +71,26 @@ class Pure_CSS {
         if ( class_exists( "Grid_Columns" ) ) {
             wp_dequeue_style( "grid-columns" );
         }
+    }
+
+    static function get_the_image_args( $args ) {
+        $class = "pure-img";
+
+        if ( is_array( $args["image_class"] ) ) {
+            $args["image_class"][] = $class;
+        } else {
+            $args["image_class"] .= " {$class}";
+        }
+
+        return $args;
+    }
+
+    static function filter_get_the_image( $args ) {
+        if ( ! function_exists( "get_the_image" ) ) {
+            return;
+        }
+
+        add_filter( "get_the_image_args", array( __CLASS__, "get_the_image_args" ) );
     }
 
     static function gform_field_content( $content, $field, $value, $lead_id, $form_id ) {
