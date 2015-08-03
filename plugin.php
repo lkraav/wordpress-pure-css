@@ -91,11 +91,17 @@ class Pure_CSS {
         $prefix = hybrid_get_prefix();
 
         # main div is always a grid
-        add_filter( "{$prefix}_main_class", function( $class ) { return $class .= " pure-g"; } );
+        add_filter( "{$prefix}_main_class", function( $class ) {
+            return $class .= " pure-g";
+        } );
 
         # collapse by default, media query overrides set in theme
-        add_filter( "{$prefix}_content_class", function( $class ) { return $class .= " pure-u-1"; } );
-        add_filter( "{$prefix}_sidebar_class", function( $class ) { return $class .= " pure-u-1"; } );
+        add_filter( "{$prefix}_content_class", function( $class ) {
+            return $class .= " column pure-u-1";
+        } );
+        add_filter( "{$prefix}_sidebar_class", function( $class ) {
+            return $class .= " column pure-u-1";
+        } );
     }
 
     static function gc_column_class( $classes, $attr ) {
@@ -103,7 +109,7 @@ class Pure_CSS {
         # https://github.com/yahoo/pure/issues/437
         $default_unit = array( "pure-u-1" );
 
-        if ( sizeof( preg_grep( "/pure-u-\d/", $classes ) ) ) {
+        if ( count( preg_grep( "/pure-u-\d/", $classes ) ) ) {
             $default_unit = array();
         }
 
