@@ -35,6 +35,7 @@ class Pure_CSS {
         add_action( "after_setup_theme", array( __CLASS__, "filter_grid_columns" ), 15 );
         add_action( "after_setup_theme", array( __CLASS__, "filter_hybrid_base_dynamic" ) );
         add_action( "after_setup_theme", array( __CLASS__, "filter_hybrid_base_dynamic_020" ) );
+        add_action( "after_setup_theme", array( __CLASS__, "filter_menus" ), 15 );
         add_action( "wp_enqueue_scripts", array( __CLASS__, "enqueue_scripts" ) );
     }
 
@@ -196,16 +197,49 @@ class Pure_CSS {
         } );
     }
 
-    static function gc_column_class( $classes, $attr ) {
-        # content should be able to override minimum mobile grid
-        # https://github.com/yahoo/pure/issues/437
-        $default_unit = array( "pure-u-1" );
+    static function filter_menus() {
+        $supports = get_theme_support( "pure-css" );
 
-        if ( count( preg_grep( "/pure-u-\d/", $classes ) ) ) {
-            $default_unit = array();
+        if ( ! is_array( $supports ) ) {
+            return;
         }
 
-        return array_merge( $classes, $default_unit );
+        if ( ! isset( $supports[0] ) ) {
+            return;
+        }
+
+        if ( in_array( "menus", $supports[0] ) ) {
+            add_filter( "nav_menu_css_class", array( __CLASS__, "filter_nav_menu_css_class" ), 10, 4 );
+            add_filter( "wp_nav_menu_args", array( __CLASS__, "filter_wp_nav_menu" ) );
+        }
+    }
+
+    static function has_class_pure_u( $classes ) {
+        return count( preg_grep( "/pure-u-\d/", $classes ) );
+    }
+
+    static function filter_nav_menu_css_class( $classes, $item, $args, $depth ) {
+        if ( ! self::has_class_pure_u( $classes ) ) {
+            $classes[] = "pure-u-1";
+        }
+
+        $classes[] = "column";
+
+        return $classes;
+    }
+
+    static function filter_wp_nav_menu( $args ) {
+        $args["menu_class"] .= " pure-g";
+        return $args;
+    }
+
+    static function gc_column_class( $classes, $attr ) {
+        # content should be able to override minimum mobile grid https://github.com/yahoo/pure/issues/437
+        if ( ! self::has_class_pure_u( $classes ) ) {
+            $classes[] = "pure-u-1";
+        }
+
+        return $classes;
     }
 
     static function wrap_column_content( $content ) {
