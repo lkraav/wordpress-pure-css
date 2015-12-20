@@ -30,6 +30,7 @@ class Pure_CSS {
     );
 
     static function on_load() {
+        add_action( "after_setup_theme", array( __CLASS__, "filter_gravityforms" ), 15 );
         add_action( "after_setup_theme", array( __CLASS__, "filter_hybrid_base_dynamic" ) );
         add_action( "after_setup_theme", array( __CLASS__, "filter_hybrid_base_dynamic_020" ) );
         add_action( "wp_enqueue_scripts", array( __CLASS__, "enqueue_scripts" ) );
@@ -67,6 +68,40 @@ class Pure_CSS {
         wp_style_add_data( "pure-grids-responsive-old-ie", "conditional", "lte IE 8" );
 
         wp_dequeue_style( "grid-columns" );
+    }
+
+    static function gform_next_button( $button, $form ) {
+        return str_replace( "class='", "class='pure-button ", $button );
+    }
+
+    static function gform_previous_button( $button, $form ) {
+        return str_replace( "class='", "class='pure-button ", $button );
+    }
+
+    static function gform_submit_button( $button, $form ) {
+        return str_replace( "class='", "class='pure-button pure-button-primary ", $button );
+    }
+
+    static function filter_gravityforms() {
+        if ( ! class_exists( "GFForms" ) ) {
+            return;
+        }
+
+        $supports = get_theme_support( "pure-css" );
+
+        if ( ! is_array( $supports ) ) {
+            return;
+        }
+
+        if ( ! isset( $supports[0] ) ) {
+            return;
+        }
+
+        if ( in_array( "buttons", $supports[0] ) ) {
+            add_filter( "gform_next_button", array( __CLASS__, "gform_next_button" ), 10, 2 );
+            add_filter( "gform_previous_button", array( __CLASS__, "gform_previous_button" ), 10, 2 );
+            add_filter( "gform_submit_button", array( __CLASS__, "gform_submit_button" ), 10, 2 );
+        }
     }
 
     static function filter_grid_columns() {
