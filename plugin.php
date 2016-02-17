@@ -52,14 +52,14 @@ class Pure_CSS {
 
         if ( is_array( $supports ) && isset( $supports[0] ) ) {
             foreach ( $supports[0] as $s ) {
-                if ( ! in_array( $s, self::$supports ) ) {
+                if ( ! in_array( $s, self::$supports, true ) ) {
                     continue;
                 }
 
                 $enqueue .= "&pure/$pure_css_version/$s$pure_css_minified.css";
             }
 
-            if ( in_array( "grids", $supports[0] ) ) {
+            if ( in_array( "grids", $supports[0], true ) ) {
                 $enqueue .= "&pure/$pure_css_version/grids-responsive$pure_css_minified.css";
             }
         }
@@ -149,13 +149,13 @@ class Pure_CSS {
             return;
         }
 
-        if ( in_array( "buttons", $supports[0] ) ) {
+        if ( in_array( "buttons", $supports[0], true ) ) {
             add_filter( "gform_next_button", array( __CLASS__, "gform_next_button" ), 10, 2 );
             add_filter( "gform_previous_button", array( __CLASS__, "gform_previous_button" ), 10, 2 );
             add_filter( "gform_submit_button", array( __CLASS__, "gform_submit_button" ), 10, 2 );
         }
 
-        if ( in_array( "forms", $supports[0] ) ) {
+        if ( in_array( "forms", $supports[0], true ) ) {
             add_filter( "gform_field_content", array( __CLASS__, "gform_field_content" ), 10, 5 );
             add_filter( "gform_field_input", array( __CLASS__, "gform_field_input" ), 10, 5 );
             add_filter( "gform_form_tag", array( __CLASS__, "gform_form_tag" ), 10, 2 );
@@ -208,7 +208,7 @@ class Pure_CSS {
             return;
         }
 
-        if ( in_array( "menus", $supports[0] ) ) {
+        if ( in_array( "menus", $supports[0], true ) ) {
             add_filter( "nav_menu_css_class", array( __CLASS__, "filter_nav_menu_css_class" ), 10, 4 );
             add_filter( "wp_nav_menu_args", array( __CLASS__, "filter_wp_nav_menu" ) );
         }
