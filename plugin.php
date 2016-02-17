@@ -46,7 +46,7 @@ class Pure_CSS {
         $pure_css_minified = $pure_css_minified ? "-min" : "";
 
         $cdn = "https://yui-s.yahooapis.com";
-        $enqueue = "$cdn/combo?pure/$pure_css_version/base$pure_css_minified.css";
+        $url = "$cdn/combo?pure/$pure_css_version/base$pure_css_minified.css";
 
         $supports = get_theme_support( "pure-css" );
 
@@ -56,18 +56,34 @@ class Pure_CSS {
                     continue;
                 }
 
-                $enqueue .= "&pure/$pure_css_version/$s$pure_css_minified.css";
+                $url .= "&pure/$pure_css_version/$s$pure_css_minified.css";
             }
 
             if ( in_array( "grids", $supports[0], true ) ) {
-                $enqueue .= "&pure/$pure_css_version/grids-responsive$pure_css_minified.css";
+                $url .= "&pure/$pure_css_version/grids-responsive$pure_css_minified.css";
             }
         }
 
-        wp_enqueue_style( "pure", $enqueue, false, null );
+        $enqueue = array(
+            "pure" => array( "url" => $url ),
+            "pure-grids-responsive-old-ie" => array( "data" => "lte IE 8", "url" => "$cdn/pure/$pure_css_version/grids-responsive-old-ie$pure_css_minified.css" ),
+        );
 
-        wp_enqueue_style( "pure-grids-responsive-old-ie", "$cdn/pure/$pure_css_version/grids-responsive-old-ie$pure_css_minified.css", false, null );
-        wp_style_add_data( "pure-grids-responsive-old-ie", "conditional", "lte IE 8" );
+        $enqueue = apply_filters( "pure_css_enqueue", $enqueue );
+
+        foreach ( $enqueue as $slug => $resource ) {
+            $version = null;
+
+            if ( isset( $resource["version"] ) ) {
+                $version = $resource["version"];
+            }
+
+            wp_enqueue_style( $slug, $resource["url"], false, $version );
+
+            if ( isset( $resource["data"]) && $data = $resource["data"] ) {
+                wp_style_add_data( $slug, "conditional", $data );
+            }
+        }
 
         if ( class_exists( "Grid_Columns" ) ) {
             wp_dequeue_style( "grid-columns" );
