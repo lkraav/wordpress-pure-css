@@ -31,10 +31,10 @@ class Pure_CSS {
 
     static function on_load() {
         add_action( "after_setup_theme", array( __CLASS__, "filter_gravityforms" ), 15 );
+        add_action( "after_setup_theme", array( __CLASS__, "filter_grid_columns" ), 15 );
         add_action( "after_setup_theme", array( __CLASS__, "filter_hybrid_base_dynamic" ) );
         add_action( "after_setup_theme", array( __CLASS__, "filter_hybrid_base_dynamic_020" ) );
         add_action( "wp_enqueue_scripts", array( __CLASS__, "enqueue_scripts" ) );
-        add_action( "plugins_loaded", array( __CLASS__, "filter_grid_columns" ) );
     }
 
     static function enqueue_scripts() {
@@ -67,7 +67,9 @@ class Pure_CSS {
         wp_enqueue_style( "pure-grids-responsive-old-ie", "$cdn/pure/$pure_css_version/grids-responsive-old-ie$pure_css_minified.css", false, null );
         wp_style_add_data( "pure-grids-responsive-old-ie", "conditional", "lte IE 8" );
 
-        wp_dequeue_style( "grid-columns" );
+        if ( class_exists( "Grid_Columns" ) ) {
+            wp_dequeue_style( "grid-columns" );
+        }
     }
 
     static function gform_field_content( $content, $field, $value, $lead_id, $form_id ) {
