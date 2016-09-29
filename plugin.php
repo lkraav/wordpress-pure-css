@@ -181,7 +181,6 @@ class Pure_CSS {
     static function filter_grid_columns() {
         if ( class_exists( "Grid_Columns" ) ) {
             add_action( "gc_column_class", array( __CLASS__, "gc_column_class" ), 10, 2 );
-            add_filter( "gc_column_content", array( __CLASS__, "wrap_column_content" ) );
             add_action( "gc_column_defaults", array( __CLASS__, "gc_column_defaults" ) );
             add_action( "gc_row_class", array( __CLASS__, "gc_row_class" ), 10, 2 );
             add_filter( "gc_allowed_grids", array( __CLASS__, "gc_allowed_grids" ) );
@@ -256,14 +255,6 @@ class Pure_CSS {
         }
 
         return $classes;
-    }
-
-    static function wrap_column_content( $content ) {
-        if ( apply_filters( "wrap_gc_column_content", false ) ) {
-            $content = sprintf( '<div class="wrap">%s</div>', $content );
-        }
-
-        return $content;
     }
 
     static function gc_column_defaults( $defaults ) {
